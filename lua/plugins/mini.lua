@@ -13,8 +13,6 @@ return {
 		files.setup()
 		local state, close = files.get_explorer_state, files.close
 		files.toggle = function() (state() and close or files.open)() end
-		files.quit = function() if state() then close() end end
 		vim.keymap.set({ "n", "i", "v" }, "<leader>b", files.toggle)
-		vim.keymap.set({ "n", "i", "v" }, "<ESC><ESC>", files.quit)
 	end,
 }
