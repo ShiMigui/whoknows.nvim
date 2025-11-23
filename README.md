@@ -44,9 +44,8 @@ Below are minimal examples for installing common dependencies.
 
 ```bash
 sudo pacman -S --needed neovim git lua51 curl wget unzip tar gzip \
-  tree-sitter-cli ripgrep fd nodejs npm python go clang cmake make gcc
-pip install --user pynvim
-npm install -g neovim
+  tree-sitter-cli ripgrep fd nodejs npm python python-pynvim go clang cmake make gcc
+sudo npm install -g neovim
 ```
 
 ### Debian / Ubuntu
