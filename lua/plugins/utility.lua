@@ -1,3 +1,4 @@
+local keymap = require("configs.keymap")
 return {
 	{
 		"nvim-telescope/telescope.nvim",
@@ -24,38 +25,30 @@ return {
 
 			telescope.setup(opts)
 			telescope.load_extension("fzf")
-			vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-			vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-			vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-			vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-			vim.keymap.set(
-				"n",
-				"<leader>f.",
-				builtin.current_buffer_fuzzy_find,
-				{ desc = "Telescope fuzzy find in buffer" }
-			)
+			keymap("n", "<leader>ff", builtin.find_files, "Telescope find files")
+			keymap("n", "<leader>fg", builtin.live_grep, "Telescope live grep")
+			keymap("n", "<leader>fb", builtin.buffers, "Telescope buffers")
+			keymap("n", "<leader>fh", builtin.help_tags, "Telescope help tags")
+			keymap("n", "<leader>f.", builtin.current_buffer_fuzzy_find, "Telescope fuzzy find in buffer")
 		end,
 	},
 	{
 		"nvim-mini/mini.files",
 		dependencies = "nvim-mini/mini.nvim",
-		opts = {},
-		keys = {
-			{ "<leader>b", require("mini.files").open, mode = { "n", "i", "v" } },
-		},
-	},
-	{
-		"akinsho/toggleterm.nvim",
-		version = "*",
-		opts = {
-			size = 15,
-			open_mapping = "<C-\\>",
-			direction = "horizontal",
-			shade_terminals = true,
-			start_in_insert = true,
-			insert_mappings = true,
-			terminal_mappings = true,
-			persist_size = true,
-		},
-	},
+    config = function() keymap({ "n", "i", "v" }, "<leader>b", require("mini.files").open, "Opens file explorer") end
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    version = "*",
+    opts = {
+      size = 15,
+      open_mapping = "<C-\\>",
+      direction = "horizontal",
+      shade_terminals = true,
+      start_in_insert = true,
+      insert_mappings = true,
+      terminal_mappings = true,
+      persist_size = true,
+    },
+  },
 }

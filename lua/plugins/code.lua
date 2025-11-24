@@ -1,3 +1,4 @@
+local keymap = require('configs.keymap')
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", italic = true })
 
 return {
@@ -73,7 +74,7 @@ return {
 			local conform = require("conform")
       require("mason-conform").setup()
 			conform.setup(opts)
-			vim.keymap.set("n", "<leader>gf", conform.format, { desc = "Formatar arquivo atual" })
+			keymap("n", "<leader>gf", conform.format, "Formats current file")
 		end,
 	},
 	{

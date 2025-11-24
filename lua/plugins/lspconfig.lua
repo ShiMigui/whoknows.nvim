@@ -3,7 +3,7 @@ return {
 	dependencies = "neovim/nvim-lspconfig",
 	config = function()
 		local mason_lsp = require("mason-lspconfig")
-		local cfg = require('core.lsp')
+		local cfg = require('configs.lsp')
 		mason_lsp.setup()
 
 		local servers = mason_lsp.get_installed_servers()
