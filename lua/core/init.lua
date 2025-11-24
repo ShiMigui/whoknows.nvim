@@ -2,7 +2,6 @@ vim.g.mapleader = "\\" -- This is the key <LEADER>, change it to " " if you pref
 
 require("core.options")
 require("core.lazy")
-require("core.tools.terminal")
 
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Exits INSERT mode" })
 vim.keymap.set("n", "<leader>q", "<CMD>bd!<CR>", { desc = "Closes buffer" })
