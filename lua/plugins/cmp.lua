@@ -43,7 +43,7 @@ return {
 			luasnip.lsp_expand(args.body)
 		end
 		opts.mapping = cmp.mapping.preset.insert({
-			["<C-Space>"] = cmp.mapping.complete(),
+			["<C-Space>"] = cmp.mapping.complete,
 			["<CR>"] = cmp.mapping(function(fn)
 				if not cmp.visible() then return fn() end
 				if luasnip.expandable() then
