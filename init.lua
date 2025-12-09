@@ -1,12 +1,12 @@
---IWantToKnowCommands                                                                                                             
---Displays all keymaps registered through the custom `keymap` function.                                                           
---How it works:                                                                                                                   
---  - Every keymap defined using `keymap(mode, lhs, rhs, desc, buffer, opts)` is stored internally in a list called `registered`. 
---  - Running `:IWantToKnowCommands` prints each entry, including:                                                                
---    - the mode (optional)                                                                                                     
---    - the description                                                                                                         
---    - the key combination (lhs)                                                                                               
---Usage:                                                                                                                          
---  :IWantToKnowCommands                                                                                                          
---Prints all registered keymaps in the order they were defined, making review and debugging easier.                               
+--IWantToKnowCommands
+--Displays all keymaps registered through the custom `keymap` function.
+--How it works:
+--  - Every keymap defined using `keymap(mode, lhs, rhs, desc, buffer, opts)` is stored internally in a list called `registered`.
+--  - Running `:IWantToKnowCommands` prints each entry, including:
+--    - the mode (optional)
+--    - the description
+--    - the key combination (lhs)
+--Usage:
+--  :IWantToKnowCommands
+--Prints all registered keymaps in the order they were defined, making review and debugging easier.
 require("core")

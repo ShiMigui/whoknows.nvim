@@ -1,4 +1,4 @@
-local keymap = require("configs.keymap")
+local keymap = require("core.keymap")
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", italic = true })
 
 return {
@@ -73,9 +73,9 @@ return {
 			cmp.setup(opts)
 		end,
 	},
-  {
-    "folke/lazydev.nvim",
-    ft = "lua",
-    opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
-  },
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
 }
