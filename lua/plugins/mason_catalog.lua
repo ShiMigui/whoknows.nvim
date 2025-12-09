@@ -1,4 +1,5 @@
 local keymap = require("configs.keymap")
+
 return {
 	{
 		"stevearc/conform.nvim",
@@ -11,7 +12,9 @@ return {
 	},
 	{
 		"ShiMigui/mason-catalog.nvim",
-    dependencies = "neovim/nvim-lspconfig",
+		dependencies = "neovim/nvim-lspconfig",
+		---@type MsnCatalogDefaultOpts
+		opts = { ensure_installed = { "lua-language-server" } },
 		config = function(_, opts)
 			require("mason-catalog.integrations.ensure_conform_pkgs").setup()
 			require("mason-catalog.integrations.config_lsp_servers").setup(require("configs.lsp"))
