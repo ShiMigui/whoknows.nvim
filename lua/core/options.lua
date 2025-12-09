@@ -5,7 +5,6 @@ vim.o.relativenumber = true
 vim.o.wrap = true
 vim.o.swapfile = false
 vim.o.clipboard = "" -- If you want to use the same clipboard as your system, set this to 'unnamedplus', I don't like this btw
-vim.o.cmdheight = 0 -- Command-line will appear always typing a command, I like this config.
 
 -- Indentation
 vim.o.expandtab = true
