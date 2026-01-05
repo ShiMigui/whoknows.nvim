@@ -36,13 +36,6 @@ return {
 		end,
 	},
 	{
-		"nvim-mini/mini.files",
-		dependencies = "nvim-mini/mini.nvim",
-		config = function()
-			keymap({ "n", "i", "v" }, "<leader>b", require("mini.files").open, "Opens file explorer")
-		end,
-	},
-	{
 		"akinsho/toggleterm.nvim",
 		version = "*",
 		opts = {

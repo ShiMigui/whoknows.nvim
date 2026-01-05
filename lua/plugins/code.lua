@@ -1,7 +1,7 @@
-local keymap = require("core.keymap")
 vim.api.nvim_set_hl(0, "CmpGhostText", { link = "Comment", italic = true })
 
 return {
+	{ "NvChad/nvim-colorizer.lua", opts = { user_default_options = { names = false } } },
 	{
 		"nvim-treesitter/nvim-treesitter",
 		lazy = false,
