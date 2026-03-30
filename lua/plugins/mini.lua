@@ -1,0 +1,30 @@
+local ignored = {
+	[".git"] = true,
+	["node_modules"] = true,
+	["dist"] = true,
+}
+
+return {
+	"echasnovski/mini.nvim",
+	dependencies = "nvim-tree/nvim-web-devicons",
+	config = function()
+		local MiniFiles = require("mini.files")
+		MiniFiles.setup({
+			windows = { preview = true, width_preview = 40 },
+			content = {
+				filter = function(e)
+					return not ignored[e.name]
+				end,
+			},
+		})
+
+		require("mini.statusline").setup()
+		require("mini.surround").setup()
+		require("mini.comment").setup()
+		require("mini.basics").setup()
+		require("mini.move").setup()
+		require("mini.pairs").setup()
+
+		require("core.mapping").ui.file_explorer.rhs = MiniFiles.open
+	end,
+}
