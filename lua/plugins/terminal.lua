@@ -1,15 +1,13 @@
-local terminal = require("core.mapping").terminal
-
-print("SETTING TERMINAL RHS")
 return {
 	"akinsho/toggleterm.nvim",
 	version = "*",
-	opts = { direction = "horizontal", size = 15 },
+	opts = { direction = "horizontal", size = 10 },
 	config = function(_, opts)
 		require("toggleterm").setup(opts)
 		local Terminal = require("toggleterm.terminal").Terminal
 		local main_term = Terminal:new()
 
+		local terminal = require("core.keymaps.terminal")
 		function terminal.toggle.rhs()
 			main_term:toggle()
 		end

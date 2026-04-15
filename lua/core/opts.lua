@@ -1,5 +1,19 @@
 vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/site")
 
+vim.diagnostic.config({
+	virtual_text = false,
+	signs = true,
+	underline = true,
+	update_in_insert = false,
+	severity_sort = true,
+	float = {
+		border = "rounded",
+		source = "if_many",
+		header = "",
+		prefix = "",
+	},
+})
+
 local o = vim.o
 
 o.number = true

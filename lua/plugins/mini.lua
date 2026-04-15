@@ -1,15 +1,14 @@
-local ignored = {
-	[".git"] = true,
-	["node_modules"] = true,
-	["dist"] = true,
-}
+local ui = require("core.keymaps.ui")
+local ignored = {}
+for _, n in ipairs(require("settings.config").ignore_names) do
+	ignored[n] = true
+end
 
 return {
 	"echasnovski/mini.nvim",
 	dependencies = "nvim-tree/nvim-web-devicons",
 	config = function()
-		local MiniFiles = require("mini.files")
-		MiniFiles.setup({
+		require("mini.files").setup({
 			windows = { preview = true, width_preview = 40 },
 			content = {
 				filter = function(e)
@@ -17,6 +16,7 @@ return {
 				end,
 			},
 		})
+		ui.file_explorer.rhs = require("mini.files").open
 
 		require("mini.statusline").setup()
 		require("mini.surround").setup()
@@ -24,7 +24,5 @@ return {
 		require("mini.basics").setup()
 		require("mini.move").setup()
 		require("mini.pairs").setup()
-
-		require("core.mapping").ui.file_explorer.rhs = MiniFiles.open
 	end,
 }
