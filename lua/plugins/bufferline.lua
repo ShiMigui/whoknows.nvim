@@ -1,4 +1,4 @@
-local core = require("core.keymaps.core")
+local core = require("keymaps.core")
 core.next_buffer.rhs = "<CMD>BufferLineCycleNext<CR>"
 core.prev_buffer.rhs = "<CMD>BufferLineCyclePrev<CR>"
 

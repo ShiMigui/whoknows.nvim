@@ -1,4 +1,4 @@
-local keymaps = require("core.keymaps.lsp")
+local keymaps = require("keymaps.lsp")
 local user_config = require("settings.config")
 
 return {

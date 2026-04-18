@@ -7,35 +7,41 @@
 ---@field desc string Description used by tools like which-key
 ---@field opts? table Additional options passed to `vim.keymap.set`
 
----@type table<string, Mapping>
-local global_maps = {}
+---@type Mapping[]
+local maps = {}
 
 ---@param tbl table
 ---@param key string
 ---@param value Mapping
-local function add_key(tbl, key, value)
+local function set(tbl, key, value)
 	value.mode = value.mode or "n"
 
 	value.opts = value.opts or {}
 	value.opts.desc = value.desc
 
-	if not value.lhs or not value.desc then
+	local lhs = value.lhs
+	if not lhs or not value.desc then
 		error("Mapping requires: lhs and desc")
 	end
+
 	rawset(tbl, key, value)
-	table.insert(global_maps, value)
+	table.insert(maps, value)
 end
 
-local metatable_opts = { __newindex = add_key }
-local function create_group()
-	return setmetatable({}, metatable_opts)
-end
+local metatable_opts = { __newindex = set }
 
----@type {
----create_group: fun(),
----list: Mapping[],
----}
 return {
-	create_group = create_group,
-	list = global_maps,
+	create_group = function()
+		return setmetatable({}, metatable_opts)
+	end,
+	apply = function()
+		local lvl = vim.log.levels.WARN
+		for _, map in ipairs(maps) do
+			if map.rhs then
+				vim.keymap.set(map.mode, map.lhs, map.rhs, map.opts)
+			else
+				vim.notify(("Keymap '%s' (%s) is missing rhs"):format(map.desc, map.lhs), lvl)
+			end
+		end
+	end,
 }

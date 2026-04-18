@@ -1,5 +1,4 @@
-local u = require('core.keymaps.utils')
-local M = u.create_group()
+local M = require("keymaps.utils").create_group()
 local buf = vim.lsp.buf
 
 M.add = { lhs = "<leader>wa", rhs = buf.add_workspace_folder, desc = "Add workspace folder" }

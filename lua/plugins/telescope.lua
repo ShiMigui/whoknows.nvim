@@ -1,6 +1,7 @@
-local workspaces = require("core.keymaps.workspace")
-local core = require("core.keymaps.core")
-local lsp = require("core.keymaps.lsp")
+local keymaps = require("keymaps")
+local workspaces = keymaps.workspace
+local core = keymaps.core
+local lsp = keymaps.lsp
 
 return {
 	"nvim-telescope/telescope.nvim",
@@ -26,13 +27,14 @@ return {
 
 		local b = require("telescope.builtin")
 
+		core.buffers = { lhs = "<leader>fb", desc = "Buffers", rhs = b.buffers }
+		core.help_tags = { lhs = "<leader>fh", desc = "Help tags", rhs = b.help_tags }
+		core.live_grep = { lhs = "<leader>fg", desc = "Live grep", rhs = b.live_grep }
+		core.find_files = { lhs = "<leader>ff", desc = "Find files", rhs = b.find_files }
+		core.find_neovim = { lhs = "<leader>fn", desc = "Find Neovim config" }
 		function core.find_neovim.rhs()
 			b.find_files({ cwd = vim.fn.stdpath("config") })
 		end
-		core.buffers.rhs = b.buffers
-		core.help_tags.rhs = b.help_tags
-		core.live_grep.rhs = b.live_grep
-		core.find_files.rhs = b.find_files
 
 		lsp.definition.rhs = b.lsp_definitions
 		lsp.references.rhs = b.lsp_references

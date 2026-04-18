@@ -7,7 +7,7 @@ return {
 		local Terminal = require("toggleterm.terminal").Terminal
 		local main_term = Terminal:new()
 
-		local terminal = require("core.keymaps.terminal")
+		local terminal = require("keymaps").terminal
 		function terminal.toggle.rhs()
 			main_term:toggle()
 		end

@@ -1,5 +1,4 @@
-local u = require("core.keymaps.utils")
-local M = u.create_group()
+local M = require("keymaps.utils").create_group()
 local lsp = vim.lsp
 local buf = lsp.buf
 

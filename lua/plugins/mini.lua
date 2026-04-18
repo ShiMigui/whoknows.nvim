@@ -1,4 +1,3 @@
-local ui = require("core.keymaps.ui")
 local ignored = {}
 for _, n in ipairs(require("settings.config").ignore_names) do
 	ignored[n] = true
@@ -16,7 +15,7 @@ return {
 				end,
 			},
 		})
-		ui.file_explorer.rhs = require("mini.files").open
+		require("keymaps").ui.file_explorer.rhs = require("mini.files").open
 
 		require("mini.statusline").setup()
 		require("mini.surround").setup()
