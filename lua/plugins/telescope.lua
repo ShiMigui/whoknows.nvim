@@ -1,7 +1,8 @@
-local keymaps = require("keymaps")
-local workspaces = keymaps.workspace
-local core = keymaps.core
-local lsp = keymaps.lsp
+local workspaces = require("keymaps").workspace
+local core = require("keymaps").core
+local lsp = require("keymaps").lsp
+
+local file_ignore_patterns = require("settings").core.ignore_names
 
 return {
 	"nvim-telescope/telescope.nvim",
@@ -19,7 +20,7 @@ return {
 				override_generic_sorter = true,
 			},
 		},
-		defaults = { file_ignore_patterns = require("settings.config").ignore_names },
+		defaults = { file_ignore_patterns = file_ignore_patterns },
 	},
 	config = function(_, opts)
 		require("telescope").setup(opts)

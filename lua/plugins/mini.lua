@@ -1,5 +1,5 @@
 local ignored = {}
-for _, n in ipairs(require("settings.config").ignore_names) do
+for _, n in ipairs(require("settings").core.ignore_names) do
 	ignored[n] = true
 end
 

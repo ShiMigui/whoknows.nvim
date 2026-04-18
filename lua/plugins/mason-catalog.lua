@@ -10,7 +10,7 @@ return {
 		integrations = { "ensure_conform_formatters" },
 		ensure_installed = { "java-debug-adapter", "java-test", "pgformatter" },
 		lsp = {
-			default_config = require("settings.lsp_config"),
+			default_config = require("settings").lsp,
 			by_group = {
 				{ extensions = { "js", "ts", "jsx", "tsx" }, lsps = { "typescript-language-server", "eslint-lsp" } },
 				{ extensions = { "json", "jsonc" }, lsps = { "json-lsp" } },
