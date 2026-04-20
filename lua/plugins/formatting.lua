@@ -1,4 +1,4 @@
-local keymaps = require("keymaps.lsp")
+local keymaps = require("keymaps").lsp
 local user_config = require("settings").core
 
 return {
@@ -7,7 +7,7 @@ return {
 		default_format_opts = { lsp_format = "fallback" },
 		formatters_by_ft = require("settings").formatters,
 		format_on_save = function()
-			return user_config.auto_format and { timeout_ms = 500 } or nil
+			return user_config.format_on_save and { timeout_ms = 500 } or nil
 		end,
 	},
 	config = function(_, opts)

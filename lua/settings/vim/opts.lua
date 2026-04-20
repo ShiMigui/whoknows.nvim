@@ -1,26 +1,11 @@
-vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/site")
-
-vim.diagnostic.config({
-	virtual_text = true,
-	signs = true,
-	underline = true,
-	update_in_insert = false,
-	severity_sort = true,
-	float = {
-		border = "rounded",
-		source = "if_many",
-		header = "",
-		prefix = "",
-	},
-})
-
+--vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/site")
 local o = vim.o
 
 o.number = true
 o.relativenumber = true
 o.cursorline = true
 o.termguicolors = true
-o.signcolumn = "yes"
+o.signcolumn = "yes:1"
 o.scrolloff = 8
 o.sidescrolloff = 8
 o.wrap = false

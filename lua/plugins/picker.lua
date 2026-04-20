@@ -1,8 +1,8 @@
 local workspaces = require("keymaps").workspace
-local core = require("keymaps").core
+local custom = require("keymaps").custom
 local lsp = require("keymaps").lsp
 
-local file_ignore_patterns = require("settings").core.ignore_names
+local file_ignore_patterns = require("settings").core.file_explorer.ignore
 
 return {
 	"nvim-telescope/telescope.nvim",
@@ -28,12 +28,12 @@ return {
 
 		local b = require("telescope.builtin")
 
-		core.buffers = { lhs = "<leader>fb", desc = "Buffers", rhs = b.buffers }
-		core.help_tags = { lhs = "<leader>fh", desc = "Help tags", rhs = b.help_tags }
-		core.live_grep = { lhs = "<leader>fg", desc = "Live grep", rhs = b.live_grep }
-		core.find_files = { lhs = "<leader>ff", desc = "Find files", rhs = b.find_files }
-		core.find_neovim = { lhs = "<leader>fn", desc = "Find Neovim config" }
-		function core.find_neovim.rhs()
+		custom.buffers = { lhs = "<leader>fb", desc = "Buffers", rhs = b.buffers }
+		custom.help_tags = { lhs = "<leader>fh", desc = "Help tags", rhs = b.help_tags }
+		custom.live_grep = { lhs = "<leader>fg", desc = "Live grep", rhs = b.live_grep }
+		custom.find_files = { lhs = "<leader>ff", desc = "Find files", rhs = b.find_files }
+		custom.find_neovim = { lhs = "<leader>fn", desc = "Find Neovim config" }
+		function custom.find_neovim.rhs()
 			b.find_files({ cwd = vim.fn.stdpath("config") })
 		end
 

@@ -1,69 +1,46 @@
 return {
 	"rebelot/kanagawa.nvim",
 	opts = {
-		compile = false,
+		compile = true,
 		undercurl = true,
-
 		commentStyle = { italic = true },
 		keywordStyle = { italic = true },
 		statementStyle = { bold = true },
-		functionStyle = { bold = true },
-		typeStyle = { italic = true },
-
-		dimInactive = true,
+		functionStyle = {},
+		typeStyle = {},
+		transparent = false,
+		dimInactive = false,
 		terminalColors = true,
-
 		colors = {
-			palette = {},
 			theme = {
 				all = {
 					ui = {
 						bg_gutter = "none",
-						bg_m3 = "none",
 					},
 				},
 			},
 		},
+		overrides = function(colors)
+			local theme = colors.theme
 
-		-- overrides = function(colors)
-		-- 	local theme = colors.theme
-		--
-		-- 	return {
-		-- 		-- CursorLine = { bg = theme.ui.bg_p1 },
-		--
-		-- 		LineNr = { fg = theme.ui.fg_dim },
-		-- 		CursorLineNr = { fg = colors.palette.dragonYellow, bold = true },
-		--
-		-- 		Visual = { bg = theme.ui.bg_visual },
-		--
-		-- 		Comment = { fg = theme.ui.fg_dim, italic = true },
-		--
-		-- 		Function = { fg = colors.palette.dragonBlue, bold = true },
-		--
-		-- 		Keyword = { fg = colors.palette.dragonPink, italic = true },
-		--
-		-- 		String = { fg = colors.palette.dragonGreen },
-		--
-		-- 		DiagnosticVirtualTextError = { bg = "none", fg = colors.palette.samuraiRed },
-		-- 		DiagnosticVirtualTextWarn = { bg = "none", fg = colors.palette.roninYellow },
-		--
-		-- 		Pmenu = { bg = theme.ui.bg_m1 },
-		-- 		PmenuSel = { bg = theme.ui.bg_p1, bold = true },
-		--
-		-- 		TelescopeTitle = { fg = colors.palette.dragonBlue, bold = true },
-		-- 		TelescopeSelection = { bg = theme.ui.bg_p1 },
-		--
-		-- 		NormalFloat = { bg = theme.ui.bg_m1 },
-		-- 		FloatBorder = { fg = theme.ui.fg_border },
-		-- 	}
-		-- end,
+			local sign = { bg = "none", fg = theme.ui.fg_dim }
 
+			return {
+				LineNr = sign,
+				CursorLineNr = { fg = theme.syn.constant },
+				CursorLine = { bg = theme.ui.bg_p1 },
+			}
+		end,
 		theme = "dragon",
+		background = {
+			dark = "wave",
+			light = "lotus",
+		},
 	},
-
 	config = function(_, opts)
-		require("kanagawa").setup(opts)
-		vim.cmd("KanagawaCompile")
-		vim.cmd.colorscheme("kanagawa")
+		local kana = require("kanagawa")
+		kana.setup(opts)
+		kana.load("wave")
+		kana.compile()
 	end,
 }
