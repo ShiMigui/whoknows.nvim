@@ -1,4 +1,3 @@
---vim.opt.runtimepath:append(vim.fn.stdpath("data") .. "/site")
 local o = vim.o
 
 o.number = true
