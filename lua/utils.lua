@@ -16,7 +16,6 @@ local M = {
 		return set
 	end,
 	warn = notify(vim.log.levels.WARN),
-	info = notify(vim.log.levels.INFO),
 }
 
 ---@param bind Mapping

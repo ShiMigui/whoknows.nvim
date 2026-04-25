@@ -10,7 +10,6 @@
 ---@field opts? table Additional options passed to `vim.keymap.set`
 
 return {
-	ui = require("keymaps.ui"),
 	lsp = require("keymaps.lsp"),
 	core = require("keymaps.core"),
 	terminal = require("keymaps.terminal"),

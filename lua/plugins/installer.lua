@@ -1,19 +1,16 @@
 return {
 	"ShiMigui/catalog.nvim",
 	dependencies = {
-		"neovim/nvim-lspconfig",
 		{ "williamboman/mason.nvim", opts = {} },
+		"neovim/nvim-lspconfig",
+		"hrsh7th/nvim-cmp",
 	},
 	opts = {
+		lsp = require("settings").lsp,
 		conform = true,
-		lsp = {
-			config = require("settings").lsp,
-
-			lua = "lua-language-server",
-		},
 	},
 	config = function(_, opts)
-		local registry = require("mason-registry")
+		local registry = require("mason-registry") -- It's needed since Mason registry should not be cached yet
 
 		if #registry.get_all_packages() > 0 then
 			require("catalog").setup(opts)
