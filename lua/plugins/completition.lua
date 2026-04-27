@@ -1,68 +1,52 @@
 return {
-	"hrsh7th/nvim-cmp",
-	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
-		"hrsh7th/cmp-buffer",
-		"hrsh7th/cmp-path",
-		"hrsh7th/cmp-cmdline",
-		"L3MON4D3/LuaSnip",
-		"saadparwaiz1/cmp_luasnip",
-		"rafamadriz/friendly-snippets",
+	{
+		"stevearc/conform.nvim",
+		opts = {
+			default_format_opts = { lsp_format = "fallback" },
+			formatters_by_ft = { lua = { "stylua" } },
+			format_on_save = { timeout_ms = 500 },
+		},
 	},
-	config = function()
-		local cmp = require("cmp")
-		local luasnip = require("luasnip")
-		local map = cmp.mapping
-		local cmd_line_preset = {
-			mapping = map.preset.cmdline(),
-			sources = { { name = "path" }, { name = "cmdline" } },
-		}
-
-		local function tab_behavior(next_item, expand, can_expand, modes)
-			return map(function(fallback)
-				if cmp.visible() then
-					return next_item()
-				elseif can_expand() then
-					return expand()
-				end
-				fallback()
-			end, modes)
-		end
-
-		local mappings = {
-			["<C-Space>"] = map.complete(),
-			["<CR>"] = map.confirm({ select = true }),
-			["<Esc>"] = map.close(),
-			["<Tab>"] = tab_behavior(
-				cmp.select_next_item,
-				luasnip.expand_or_jump,
-				luasnip.expand_or_jumpable,
-				{ "i", "s" }
-			),
-			["<S-Tab>"] = tab_behavior(cmp.select_prev_item, function()
-				luasnip.jump(-1)
-			end, function()
-				return luasnip.jumpable(-1)
-			end, { "i", "s" }),
-		}
-
-		require("luasnip.loaders.from_vscode").lazy_load()
-		cmp.setup({
-			mapping = map.preset.insert(mappings),
-			experimental = { ghost_text = { hl_group = "Comment" } },
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
-				end,
+	{
+		"saghen/blink.cmp",
+		dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets" },
+		version = "1.*",
+		build = "cargo build --release",
+		opts = {
+			fuzzy = { implementation = "prefer_rust", sorts = { "score", "sort_text", "label" } },
+			keymap = {
+				preset = "default",
+				["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+				["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
+				["<Tab>"] = { "select_next", "snippet_forward", "fallback" },
+				["<CR>"] = { "accept", "fallback" },
 			},
-			sources = {
-				{ name = "lazydev" },
-				{ name = "nvim_lsp" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
-				{ name = "path" },
-			},
-		})
-		cmp.setup.cmdline(":", cmd_line_preset)
-	end,
+			completion = { menu = { auto_show = true }, documentation = { auto_show = false } },
+			sources = { default = { "lsp", "snippets", "buffer", "path" } },
+			snippets = { preset = "luasnip" },
+		},
+	},
+	{
+		"ShiMigui/catalog.nvim",
+		dependencies = { { "williamboman/mason.nvim", opts = {} }, "neovim/nvim-lspconfig" },
+		opts = {
+			conform = true,
+			lsp_config = {},
+			lsp_capability_provider = "blink.cmp",
+			lsp = { lua = "lua-language-server" },
+		},
+		config = function(_, opts)
+			local r = require("mason-registry") -- It's needed since Mason registry should not be cached yet
+			local function run()
+				require("catalog").setup(opts)
+			end
+
+			return #r.get_all_packages() > 0 and run() or r.refresh(run)
+		end,
+	},
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
 }
