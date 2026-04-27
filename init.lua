@@ -1,12 +1,6 @@
 vim.g.mapleader = "\\"
+vim.opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
 
-require("settings.vim.opts")
-require("settings.vim.diagnostic")
-require("manager")
+require("core")
 
-local apply = require("utils").apply_bind
-for _, map in pairs(require("keymaps")) do
-	for _, bind in pairs(map) do
-		apply(bind)
-	end
-end
+require("keymaps.apply")
