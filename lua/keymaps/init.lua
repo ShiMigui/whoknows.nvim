@@ -1,22 +1,53 @@
----@alias VIM_MODE "n"|"v"|"i"|"r"|"t"
----@alias VIM_MODES VIM_MODE|VIM_MODE[]
+---@alias MODE "n"|"i"|"t"|"r"|"v"
+---@alias MODES MODE[]|MODE
 ---
 ---@class Mapping
----@field mode? VIM_MODES Mode(s) where the mapping applies
----@field lhs string Left-hand side (key sequence)
----@field rhs? string|function Right-hand side (command or Lua function)
----@field cmd? string Right-hand side (command)
----@field desc string Description used by tools like which-key
----@field opts? table Additional options passed to `vim.keymap.set`
+---@field lhs? string
+---@field leader? string
+---@field cmd? string
+---@field modes? MODES
+---@field rhs? function|string
+---@field opts? vim.keymap.set.Opts
+---@field esc? boolean
 
+local lsp = vim.lsp
+local buf = lsp.buf
+local inlay_hint = lsp.inlay_hint
+local diagnostic = vim.diagnostic
+
+local function toggle_inlay_hints()
+	inlay_hint.enable(not inlay_hint.is_enabled())
+end
+
+local function jump_diagnostic(count)
+	return function()
+		diagnostic.jump({ count = count })
+	end
+end
+
+---@type table<string, Mapping>
 return {
-	lsp = require("keymaps.lsp"),
-	core = require("keymaps.core"),
-	terminal = require("keymaps.terminal"),
-	codelens = require("keymaps.codelens"),
-	workspace = require("keymaps.workspace"),
-	diagnostic = require("keymaps.diagnostic"),
+	["exit insert mode"] = { lhs = "jk", modes = "i", esc = true },
+	["buffer quit"] = { leader = "bd", cmd = "bd!" },
 
-	---@type table<string, Mapping>
-	custom = {},
+	["go to definition"] = { lhs = "gd", rhs = buf.definition },
+	["go to declaration"] = { lhs = "gD", rhs = buf.declaration },
+	["go to implementation"] = { lhs = "gi", rhs = buf.implementation },
+	["go to references"] = { lhs = "gr", rhs = buf.references },
+
+	["hover"] = { lhs = "K", rhs = buf.hover },
+	["signature help"] = { lhs = "<C-k>", modes = { "i", "n" }, rhs = buf.signature_help },
+
+	["rename symbol"] = { lhs = "rn", rhs = buf.rename },
+	["code action"] = { leader = "ca", modes = { "n", "v" }, rhs = buf.code_action },
+
+	["open diagnostics float"] = { lhs = "gl", rhs = diagnostic.open_float },
+	["next diagnostic"] = { lhs = "]d", rhs = jump_diagnostic(1) },
+	["prev diagnostic"] = { lhs = "[d", rhs = jump_diagnostic(-1) },
+	["list diagnostics"] = { leader = "dl", rhs = diagnostic.setloclist },
+
+	["add workspace folder"] = { leader = "wa", rhs = buf.add_workspace_folder },
+	["remove workspace folder"] = { leader = "wr", rhs = buf.remove_workspace_folder },
+
+	["toggle inlay hints"] = { leader = "th", rhs = toggle_inlay_hints },
 }
