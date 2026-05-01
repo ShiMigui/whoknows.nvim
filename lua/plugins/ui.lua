@@ -1,4 +1,4 @@
-local maps = require("keymaps")
+local maps = require("core.keymap")
 
 return {
 	{
@@ -24,11 +24,16 @@ return {
 			require("telescope").load_extension("fzf")
 
 			local b = require("telescope.builtin")
+			local function find_config()
+				b.find_files({ cwd = vim.fn.stdpath("config"), prompt_title = "Neovim Config" })
+			end
+
 			maps["help tags"] = { leader = "fh", rhs = b.help_tags }
 			maps["find files"] = { leader = "ff", rhs = b.find_files }
 			maps["recent files"] = { leader = "fr", rhs = b.oldfiles }
 			maps["find with live grep"] = { leader = "fg", rhs = b.live_grep }
 			maps["current buffer search"] = { leader = "fs", rhs = b.current_buffer_fuzzy_find }
+			maps["find configuration files"] = { leader = "fn", rhs = find_config }
 
 			maps["go to definition"].rhs = b.lsp_definitions
 			maps["go to references"].rhs = b.lsp_references

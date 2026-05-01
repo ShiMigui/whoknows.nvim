@@ -1,4 +1,4 @@
-local maps = require("keymaps")
+local maps = require("core.keymap")
 maps["open mini files"] = { lhs = "<C-e>", modes = { "n", "i" }, cmd = "lua MiniFiles.open()", esc = true }
 
 return {
