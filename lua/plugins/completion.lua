@@ -1,10 +1,18 @@
+local maps = require("core.keymap")
+local config = require("config")
+
 return {
+	{
+		"folke/lazydev.nvim",
+		ft = "lua",
+		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
+	},
 	{
 		"stevearc/conform.nvim",
 		opts = {
 			default_format_opts = { lsp_format = "fallback" },
-			formatters_by_ft = { lua = { "stylua" } },
 			format_on_save = { timeout_ms = 500 },
+			formatters_by_ft = config.formatters,
 		},
 	},
 	{
@@ -56,9 +64,8 @@ return {
 		dependencies = { { "williamboman/mason.nvim", opts = {} }, "neovim/nvim-lspconfig" },
 		opts = {
 			conform = true,
-			lsp_config = {},
+			lsp = config.lsps,
 			lsp_capability_provider = "blink.cmp",
-			lsp = { lua = "lua-language-server" },
 		},
 		config = function(_, opts)
 			local r = require("mason-registry") -- It's needed since Mason registry should not be cached yet
@@ -68,10 +75,5 @@ return {
 
 			return #r.get_all_packages() > 0 and run() or r.refresh(run)
 		end,
-	},
-	{
-		"folke/lazydev.nvim",
-		ft = "lua",
-		opts = { library = { { path = "${3rd}/luv/library", words = { "vim%.uv" } } } },
 	},
 }
