@@ -12,6 +12,31 @@ return {
 		dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets" },
 		version = "1.*",
 		build = "cargo build --release",
+		config = function(_, opts)
+			require("blink.cmp").setup(opts)
+			require("luasnip.loaders.from_vscode").lazy_load()
+			local ls = require("luasnip")
+
+			maps["snippet expand/jump"] = {
+				mode = { "i", "s" },
+				lhs = "<C-l>",
+				rhs = function()
+					if ls.expand_or_jumpable() then
+						ls.expand_or_jump()
+					end
+				end,
+			}
+
+			maps["snippet backward"] = {
+				mode = { "i", "s" },
+				lhs = "<C-h>",
+				rhs = function()
+					if ls.jumpable(-1) then
+						ls.jump(-1)
+					end
+				end,
+			}
+		end,
 		opts = {
 			fuzzy = { implementation = "prefer_rust", sorts = { "score", "sort_text", "label" } },
 			keymap = {
