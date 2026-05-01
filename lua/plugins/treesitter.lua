@@ -5,31 +5,26 @@ return {
 		local ts = require("nvim-treesitter")
 		ts.setup(opts)
 
-		local seen = {}
+		local install = require("nvim-treesitter.install")
+		local installed = {}
+		for i, v in ipairs(ts.get_installed()) do
+			installed[v] = i
+		end
+
 		vim.api.nvim_create_autocmd("FileType", {
 			callback = function(args)
-				local match = args.match
-				if seen[match] then
-					return
-				end
-				seen[match] = true
-
 				local buf = args.buf
-				local ft = vim.treesitter.language.get_lang(match)
-				if not ft then
+
+				if vim.bo[buf].buftype ~= "" or vim.api.nvim_buf_get_name(buf) == "" then
 					return
 				end
 
-				local ok = pcall(vim.treesitter.get_parser, buf, ft)
-				if not ok then
-					local ok_install, err = pcall(ts.install, ft)
-					if not ok_install then
-						vim.notify(err, vim.log.levels.ERROR)
-						return
-					end
+				local ft = vim.treesitter.language.get_lang(args.match) or args.match
+				if installed[ft] then
+					return
 				end
-
-				pcall(vim.treesitter.start, buf, ft)
+				install.install({ ft })
+				installed[ft] = true
 			end,
 		})
 	end,
