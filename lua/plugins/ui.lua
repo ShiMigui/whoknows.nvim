@@ -1,4 +1,5 @@
 local maps = require("core.keymap")
+local config = require("config")
 
 return {
 	{
@@ -18,6 +19,7 @@ return {
 					override_generic_sorter = true,
 				},
 			},
+			file_ignore_patterns = config.ignore_files,
 		},
 		config = function(_, opts)
 			require("telescope").setup(opts)
