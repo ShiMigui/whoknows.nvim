@@ -64,8 +64,10 @@ return {
 		dependencies = { { "williamboman/mason.nvim", opts = {} }, "neovim/nvim-lspconfig" },
 		opts = {
 			conform = true,
-			lsp = config.lsps,
-			lsp_capability_provider = "blink.cmp",
+			lsp = {
+				capability_provider = "blink.cmp",
+				list = config.lsps,
+			},
 		},
 		config = function(_, opts)
 			local r = require("mason-registry") -- It's needed since Mason registry should not be cached yet
