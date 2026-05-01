@@ -1,7 +1,7 @@
 ---normalizes a keymap
 ---@param desc string
 ---@param map Mapping
-local function bind(desc, map)
+return function(desc, map)
 	if not map.rhs then
 		map.rhs = map.esc and "<esc>" or ""
 		if map.cmd then
@@ -26,8 +26,4 @@ local function bind(desc, map)
 	map.opts = map.opts or {}
 	vim.tbl_deep_extend("force", map.opts, { desc = desc })
 	vim.keymap.set(map.modes or "n", map.lhs, map.rhs, map.opts)
-end
-
-for desc, map in pairs(require("keymaps")) do
-	bind(desc, map)
 end
