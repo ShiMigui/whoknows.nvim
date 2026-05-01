@@ -1,5 +1,7 @@
 local opt = vim.opt
 
+opt.runtimepath:prepend(vim.fn.stdpath("data") .. "/site")
+
 opt.number = true
 opt.relativenumber = true
 opt.cursorline = true
